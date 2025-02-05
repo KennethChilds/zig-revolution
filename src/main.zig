@@ -54,7 +54,8 @@ pub fn main() !void {
             10,
         );
         for (bodies) |body| {
-            rl.drawCircle(@as(i32, @intFromFloat(body.pos.x)), @as(i32, @intFromFloat(body.pos.y)), 10, rl.Color.white);
+            // draw circles, layour for drawCircle() is (i32, i32, Color) so use @ for type coercion to convert from f32 to i32
+            rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), 10, rl.Color.white);
         }
     }
 }
