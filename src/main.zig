@@ -9,6 +9,11 @@ const Body = struct {
     color: rl.Color,
 };
 
+const Star = struct {
+    pos: rl.Vector2,
+    color: rl.Color,
+};
+
 pub fn main() !void {
 
     // window properties
@@ -17,9 +22,22 @@ pub fn main() !void {
 
     rl.initWindow(screenWidth, screenHeight, "Awesome Window");
     defer rl.closeWindow();
-    rl.setTargetFPS(9999);
+    rl.setTargetFPS(60);
 
-    // bodies
+    const num_stars: i32 = 1000;
+    var stars: [num_stars]Star = undefined;
+    var i: i32 = 0;
+    while (i < num_stars) : (i += 1) {
+        stars[i] = Star{
+            .pos = rl.Vector2{
+                .x = std.crypto.random.float(f32) * @as(f32, @floatFromInt(screenWidth)),
+                .y = std.crypto.random.float(f32) * @as(f32, @floatFromInt(screenHeight)),
+            },
+            .color = rl.Color.white,
+        };
+    }
+
+    // initial conditions of celestial bodies
     const bodies = [3]Body{
         // body 1
         Body{
@@ -57,9 +75,18 @@ pub fn main() !void {
             10,
             10,
         );
+
+        // physics constants
+        //const gravity: comptime_float = 1.0;
+
         for (bodies) |body| {
+            //const gravitational_force: comptime_float = (gravity) * (body.mass * body.mass) / (std.math.pow(distance, 2));
             // draw circles, layout for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
             rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
+        }
+
+        for (stars) |star| {
+            rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
         }
     }
 }
