@@ -5,6 +5,8 @@ const Body = struct {
     pos: rl.Vector2,
     vel: rl.Vector2,
     mass: f32,
+    radius: f32,
+    color: rl.Color,
 };
 
 pub fn main() !void {
@@ -14,33 +16,32 @@ pub fn main() !void {
     defer rl.closeWindow();
     rl.setTargetFPS(9999);
 
-    //physics
-    const gravity: f32 = 1.0;
-    // const dt: f32 = 0.016;
-
-    const force: f32 = ((gravity) / (10 * 10));
-    std.debug.print("the force between the objects is: {}", .{force});
-
     // bodies
     const bodies = [3]Body{
         // body 1
         Body{
-            .pos = rl.Vector2{ .x = 300, .y = 300 },
+            .pos = rl.Vector2{ .x = 200, .y = 600 / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0.5 },
             .mass = 1.0,
+            .color = rl.Color.red,
+            .radius = 10.0,
         },
 
         // body 2
         Body{
-            .pos = rl.Vector2{ .x = 500, .y = 300 },
+            .pos = rl.Vector2{ .x = 800 / 2, .y = 600 / 2 },
             .vel = rl.Vector2{ .x = 0, .y = -0.5 },
             .mass = 1.0,
+            .color = rl.Color.green,
+            .radius = 100.0,
         },
 
         Body{
-            .pos = rl.Vector2{ .x = 400, .y = 300 },
+            .pos = rl.Vector2{ .x = 600, .y = 600 / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0 },
             .mass = 1.0,
+            .color = rl.Color.blue,
+            .radius = 10.0,
         },
     };
 
@@ -55,7 +56,7 @@ pub fn main() !void {
         );
         for (bodies) |body| {
             // draw circles, layour for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
-            rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), 10, rl.Color.white);
+            rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
         }
     }
 }
