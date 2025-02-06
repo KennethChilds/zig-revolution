@@ -26,7 +26,7 @@ pub fn main() !void {
 
     const num_stars: i32 = 1000;
     var stars: [num_stars]Star = undefined;
-    var i: i32 = 0;
+    var i: usize = 0;
     while (i < num_stars) : (i += 1) {
         stars[i] = Star{
             .pos = rl.Vector2{
