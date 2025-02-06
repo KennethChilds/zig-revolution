@@ -79,14 +79,14 @@ pub fn main() !void {
         // physics constants
         //const gravity: comptime_float = 1.0;
 
+        for (stars) |star| {
+            rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
+        }
+
         for (bodies) |body| {
             //const gravitational_force: comptime_float = (gravity) * (body.mass * body.mass) / (std.math.pow(distance, 2));
             // draw circles, layout for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
             rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
-        }
-
-        for (stars) |star| {
-            rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
         }
     }
 }
