@@ -38,7 +38,7 @@ pub fn main() !void {
     }
 
     // initial conditions of celestial bodies
-    const bodies = [3]Body{
+    var bodies = [3]Body{
         // body 1
         Body{
             .pos = rl.Vector2{ .x = 200, .y = screenHeight / 2 },
@@ -77,14 +77,28 @@ pub fn main() !void {
         );
 
         // physics constants
-        //const gravity: comptime_float = 1.0;
+        const gravity: f32 = 10.0;
+        const distance: f32 = rl.math.vector2Distance(bodies[0].pos, bodies[1].pos);
+        const force_gravitational: f32 = (gravity) * (bodies[0].mass * bodies[0].mass) / (distance);
+        const dt: f32 = 0.1; // delta time is how often ts updates :heartbreak_emoji
+
+        const acceleration: f32 = force_gravitational / bodies[0].mass;
+
+        // Update velocity and position
+        bodies[0].vel = rl.Vector2{
+            .x = bodies[0].vel.x + acceleration * dt,
+            .y = bodies[0].vel.y + acceleration * dt,
+        };
+        bodies[0].pos = rl.Vector2{
+            .x = bodies[0].pos.x + bodies[0].vel.x * dt,
+            .y = bodies[0].pos.y + bodies[0].vel.y * dt,
+        };
 
         for (stars) |star| {
             rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
         }
 
         for (bodies) |body| {
-            //const gravitational_force: comptime_float = (gravity) * (body.mass * body.mass) / (std.math.pow(distance, 2));
             // draw circles, layout for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
             rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
         }
