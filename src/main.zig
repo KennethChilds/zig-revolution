@@ -92,7 +92,7 @@ pub fn main() !void {
         const force_x = force_magnitude * dx / distance;
         const force_y = force_magnitude * dy / distance;
 
-        const dt: f32 = 0.16;
+        const dt: f32 = 10.0;
 
         // Calculate acceleration components
         const ax = force_x / bodies[0].mass;
@@ -115,6 +115,7 @@ pub fn main() !void {
         for (bodies) |body| {
             // draw circles, layout for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
             rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
+            std.debug.print("Orbiting Body Position: x={d:.1}, y={d:.1}\n", .{ body.pos.x, body.pos.y });
         }
     }
 }
