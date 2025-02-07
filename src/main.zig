@@ -38,31 +38,37 @@ pub fn main() !void {
     }
 
     // initial conditions of celestial bodies
-    var bodies = [3]Body{
-        // body 1
+    const gravity: f32 = 6.67e-1; // Our gravitational constant
+    const central_mass: f32 = 100.0;
+    const radius: f32 = 100.0;
+    const orbit_radius: f32 = radius * 2; // Distance from center to orbiting body
+
+    // Calculate the required velocity for circular orbit: v = sqrt(G * M / r)
+    const orbital_velocity = @sqrt((gravity * central_mass) / orbit_radius);
+
+    var bodies = [_]Body{
+        // body 1 (orbiting body)
         Body{
-            .pos = rl.Vector2{ .x = 200, .y = screenHeight / 2 },
-            .vel = rl.Vector2{ .x = 0, .y = 0.5 },
+            .pos = rl.Vector2{
+                .x = screenWidth / 2 - orbit_radius, // Start left of center
+                .y = screenHeight / 2, // Same vertical position as center
+            },
+            .vel = rl.Vector2{
+                .x = 0,
+                .y = orbital_velocity, // Apply calculated orbital velocity
+            },
             .mass = 1.0,
             .color = rl.Color.red,
-            .radius = 10.0,
+            .radius = radius / 10,
         },
 
-        // body 2
+        // body 2 (central body)
         Body{
-            .pos = rl.Vector2{ .x = screenWidth / 2, .y = screenHeight / 2 },
-            .vel = rl.Vector2{ .x = 0, .y = -0.5 },
-            .mass = 100.0,
-            .color = rl.Color.green,
-            .radius = 100.0,
-        },
-
-        Body{
-            .pos = rl.Vector2{ .x = 600, .y = screenHeight / 2 },
+            .pos = rl.Vector2{ .x = @as(f32, @floatFromInt(screenWidth)) / 2, .y = @as(f32, @floatFromInt(screenHeight)) / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0 },
-            .mass = 1.0,
-            .color = rl.Color.blue,
-            .radius = 10.0,
+            .mass = central_mass,
+            .color = rl.Color.green,
+            .radius = radius,
         },
     };
 
@@ -76,9 +82,6 @@ pub fn main() !void {
             10,
         );
 
-        // physics constants
-        const gravity: f32 = 6.67e-1; // Scaled version of gravitational constant G
-
         // Calculate forces between bodies[0] and bodies[1]
         const dx = bodies[1].pos.x - bodies[0].pos.x;
         const dy = bodies[1].pos.y - bodies[0].pos.y;
@@ -89,7 +92,7 @@ pub fn main() !void {
         const force_x = force_magnitude * dx / distance;
         const force_y = force_magnitude * dy / distance;
 
-        const dt: f32 = 0.5;
+        const dt: f32 = 0.16;
 
         // Calculate acceleration components
         const ax = force_x / bodies[0].mass;
