@@ -20,7 +20,7 @@ pub fn main() !void {
     const screenWidth: i32 = 800;
     const screenHeight: i32 = 600;
 
-    rl.initWindow(screenWidth, screenHeight, "Awesome Window");
+    rl.initWindow(screenWidth, screenHeight, "Orbital Revolution");
     defer rl.closeWindow();
     rl.setTargetFPS(60);
 
