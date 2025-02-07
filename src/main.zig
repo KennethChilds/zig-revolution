@@ -52,7 +52,7 @@ pub fn main() !void {
         Body{
             .pos = rl.Vector2{ .x = screenWidth / 2, .y = screenHeight / 2 },
             .vel = rl.Vector2{ .x = 0, .y = -0.5 },
-            .mass = 1.0,
+            .mass = 100.0,
             .color = rl.Color.green,
             .radius = 100.0,
         },
@@ -77,17 +77,28 @@ pub fn main() !void {
         );
 
         // physics constants
-        const gravity: f32 = 10.0;
-        const distance: f32 = rl.math.vector2Distance(bodies[0].pos, bodies[1].pos);
-        const force_gravitational: f32 = (gravity) * (bodies[0].mass * bodies[0].mass) / (distance);
-        const dt: f32 = 0.1; // delta time is how often ts updates :heartbreak_emoji
+        const gravity: f32 = 6.67e-1; // Scaled version of gravitational constant G
 
-        const acceleration: f32 = force_gravitational / bodies[0].mass;
+        // Calculate forces between bodies[0] and bodies[1]
+        const dx = bodies[1].pos.x - bodies[0].pos.x;
+        const dy = bodies[1].pos.y - bodies[0].pos.y;
+        const distance = rl.math.vector2Distance(bodies[0].pos, bodies[1].pos);
+        const force_magnitude = (gravity * bodies[0].mass * bodies[1].mass) / (distance * distance);
+
+        // Calculate force components
+        const force_x = force_magnitude * dx / distance;
+        const force_y = force_magnitude * dy / distance;
+
+        const dt: f32 = 0.5;
+
+        // Calculate acceleration components
+        const ax = force_x / bodies[0].mass;
+        const ay = force_y / bodies[0].mass;
 
         // Update velocity and position
         bodies[0].vel = rl.Vector2{
-            .x = bodies[0].vel.x + acceleration * dt,
-            .y = bodies[0].vel.y + acceleration * dt,
+            .x = bodies[0].vel.x + ax * dt,
+            .y = bodies[0].vel.y + ay * dt,
         };
         bodies[0].pos = rl.Vector2{
             .x = bodies[0].pos.x + bodies[0].vel.x * dt,
