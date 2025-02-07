@@ -115,7 +115,8 @@ pub fn main() !void {
         for (bodies) |body| {
             // draw circles, layout for drawCircle() is (centerX: i32, centerY: i32, radius: f32, color: Color) so use @ for type coercion to convert from f32 to i32
             rl.drawCircle(@intFromFloat(body.pos.x), @intFromFloat(body.pos.y), body.radius, body.color);
-            std.debug.print("Orbiting Body Position: x={d:.3}, y={d:.3}\n", .{ body.pos.x, body.pos.y });
         }
+
+        std.debug.print("Orbiting Body Position: x={d:.3}, y={d:.3}\n", .{ bodies[0].pos.x, bodies[0].pos.y });
     }
 }
