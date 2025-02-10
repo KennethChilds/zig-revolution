@@ -50,15 +50,15 @@ pub fn main() !void {
         // body 1 (orbiting body)
         Body{
             .pos = rl.Vector2{
-                .x = screenWidth / 2 - orbit_radius, // Start left of center
-                .y = screenHeight / 2, // Same vertical position as center
+                .x = screenWidth / 4,
+                .y = screenHeight / 2,
             },
             .vel = rl.Vector2{
                 .x = 0,
-                .y = orbital_velocity, // Apply calculated orbital velocity
+                .y = orbital_velocity,
             },
             .mass = 1.0,
-            .color = rl.Color.red,
+            .color = rl.Color.dark_blue,
             .radius = radius / 10,
         },
 
@@ -67,7 +67,7 @@ pub fn main() !void {
             .pos = rl.Vector2{ .x = @as(f32, @floatFromInt(screenWidth)) / 2, .y = @as(f32, @floatFromInt(screenHeight)) / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0 },
             .mass = central_mass,
-            .color = rl.Color.green,
+            .color = rl.Color.dark_gray,
             .radius = radius,
         },
     };
