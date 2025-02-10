@@ -58,7 +58,7 @@ pub fn main() !void {
                 .y = orbital_velocity,
             },
             .mass = 1.0,
-            .color = rl.Color.dark_blue,
+            .color = rl.Color.dark_gray,
             .radius = radius / 10,
         },
 
@@ -67,7 +67,7 @@ pub fn main() !void {
             .pos = rl.Vector2{ .x = @as(f32, @floatFromInt(screenWidth)) / 2, .y = @as(f32, @floatFromInt(screenHeight)) / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0 },
             .mass = central_mass,
-            .color = rl.Color.dark_gray,
+            .color = rl.Color.dark_blue,
             .radius = radius,
         },
     };
