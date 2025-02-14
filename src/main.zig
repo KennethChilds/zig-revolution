@@ -64,7 +64,7 @@ pub fn main() !void {
 
         // body 2 (central body)
         Body{
-            .pos = rl.Vector2{ .x = @as(f32, @floatFromInt(screenWidth)) / 2, .y = @as(f32, @floatFromInt(screenHeight)) / 2 },
+            .pos = rl.Vector2{ .x = screenWidth / 2, .y = screenHeight / 2 },
             .vel = rl.Vector2{ .x = 0, .y = 0 },
             .mass = central_mass,
             .color = rl.Color.dark_blue,
