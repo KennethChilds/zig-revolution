@@ -38,7 +38,12 @@ pub fn main() !void {
         const deltaY = phys.math.dy(phys.planetConstants.moon.pos.y, phys.planetConstants.earth.pos.y);
         const dist = phys.math.distance(deltaX, deltaY);
 
-        const force = phys.math.forceMagnitude(phys.constants.gravity, phys.planetConstants.earth.mass, phys.planetConstants.moon.mass, dist);
+        const force = phys.math.forceMagnitude(
+            phys.constants.gravity,
+            phys.planetConstants.earth.mass,
+            phys.planetConstants.moon.mass,
+            dist,
+        );
 
         const forceX = -force * deltaX / dist;
         const forceY = -force * deltaY / dist;
@@ -59,14 +64,31 @@ pub fn main() !void {
 
         // gen stars
         for (stars) |star| {
-            rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
+            rl.drawPixel(
+                @intFromFloat(star.pos.x),
+                @intFromFloat(star.pos.y),
+                star.color,
+            );
         }
 
         // gen planets
-        rl.drawCircle(@intFromFloat(phys.planetConstants.earth.pos.x), @intFromFloat(phys.planetConstants.earth.pos.y), phys.planetConstants.earth.radius, phys.planetConstants.earth.color);
-        rl.drawCircle(@intFromFloat(phys.planetConstants.moon.pos.x), @intFromFloat(phys.planetConstants.moon.pos.y), phys.planetConstants.moon.radius, phys.planetConstants.moon.color);
+        rl.drawCircle(
+            @intFromFloat(phys.planetConstants.earth.pos.x),
+            @intFromFloat(phys.planetConstants.earth.pos.y),
+            phys.planetConstants.earth.radius,
+            phys.planetConstants.earth.color,
+        );
+        rl.drawCircle(
+            @intFromFloat(phys.planetConstants.moon.pos.x),
+            @intFromFloat(phys.planetConstants.moon.pos.y),
+            phys.planetConstants.moon.radius,
+            phys.planetConstants.moon.color,
+        );
 
         // print position with 3 decimal places
-        std.debug.print("Orbiting Body Position: x={d:.3}, y={d:.3}\n", .{ phys.planetConstants.moon.pos.x, phys.planetConstants.moon.pos.y });
+        std.debug.print("Orbiting Body Position: x={d:.3}, y={d:.3}\n", .{
+            phys.planetConstants.moon.pos.x,
+            phys.planetConstants.moon.pos.y,
+        });
     }
 }
