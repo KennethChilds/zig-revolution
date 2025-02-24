@@ -47,7 +47,7 @@ pub fn main() !void {
         const ax = forceX / phys.planetConstants.moon.mass;
         const ay = forceY / phys.planetConstants.moon.mass;
 
-        // move bitch
+        // movement
         phys.planetConstants.moon.vel = rl.Vector2{
             .x = phys.planetConstants.moon.vel.x + ax * dt,
             .y = phys.planetConstants.moon.vel.y + ay * dt,
@@ -57,12 +57,16 @@ pub fn main() !void {
             .y = phys.planetConstants.moon.pos.y + phys.planetConstants.moon.vel.y * dt,
         };
 
+        // gen stars
         for (stars) |star| {
             rl.drawPixel(@intFromFloat(star.pos.x), @intFromFloat(star.pos.y), star.color);
         }
 
+        // gen planets
         rl.drawCircle(@intFromFloat(phys.planetConstants.earth.pos.x), @intFromFloat(phys.planetConstants.earth.pos.y), phys.planetConstants.earth.radius, phys.planetConstants.earth.color);
         rl.drawCircle(@intFromFloat(phys.planetConstants.moon.pos.x), @intFromFloat(phys.planetConstants.moon.pos.y), phys.planetConstants.moon.radius, phys.planetConstants.moon.color);
+
+        // print position with 3 decimal places
         std.debug.print("Orbiting Body Position: x={d:.3}, y={d:.3}\n", .{ phys.planetConstants.moon.pos.x, phys.planetConstants.moon.pos.y });
     }
 }
