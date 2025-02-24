@@ -12,7 +12,6 @@ pub const constants = struct {
     pub const massEarth: f32 = 1000.0;
     pub const massMoon: f32 = 10.0;
     pub const gravity: f32 = 6.67e-1;
-    pub const centralMass: f32 = 100.0;
     pub const radius: f32 = 100.0;
     pub const orbitRadius: f32 = radius * 2;
 };
