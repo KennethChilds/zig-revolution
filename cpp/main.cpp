@@ -56,7 +56,7 @@ namespace Math
 
     double distance(double dx, double dy)
     {
-        return std::sqrt(dx * dx + dy * dy);
+        return std::sqrt(dx*dx + dy*dy);
     }
 
     double forceMagnitude(double gravity, double bodyMass1, double bodyMass2, double distance)
