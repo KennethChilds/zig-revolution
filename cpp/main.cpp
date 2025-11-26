@@ -70,7 +70,7 @@ int main() {
     // math constants
     constexpr double massEarth = 1000.0;
     constexpr double massMoon = 10.0;
-    constexpr double gravity = 6.67e-11;
+    constexpr double gravity = 6.67e-1;
     const double orbitRadius = 200.0;
 
     // assign planet attributes
@@ -128,6 +128,13 @@ int main() {
         double ax = forceX / massMoon;
         double ay = forceY / massMoon;
 
+        //update
+        moon.vel.x += ax *dt;
+        moon.vel.y += ay * dt;
+
+        moon.pos.x += moon.vel.x * dt;
+        moon.pos.y += moon.vel.y * dt;
+
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);
@@ -137,6 +144,8 @@ int main() {
         earth.drawPlanet();
         moon.drawPlanet();
         
+        // text coordinates
+        std::cout << "Orbiting Body Position: " << "x = " << moon.pos.x << "y = " << moon.pos.y << std::endl;
 
         EndDrawing();
     }
