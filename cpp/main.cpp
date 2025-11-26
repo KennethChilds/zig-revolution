@@ -84,7 +84,7 @@ int main() {
     
     Planet moon{
         {screenWidth/4.0f, screenHeight/2.0f},
-        {0, Math::orbitalVelocity(gravity, massEarth, orbitRadius)},
+        {0, static_cast<float>(Math::orbitalVelocity(gravity, massEarth, orbitRadius))},
         10.0,
         massMoon,
         GRAY
