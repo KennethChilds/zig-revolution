@@ -145,7 +145,7 @@ int main() {
         moon.drawPlanet();
         
         // text coordinates
-        std::cout << "Orbiting Body Position: " << "x = " << moon.pos.x << "y = " << moon.pos.y << std::endl;
+        std::cout << "Orbiting Body Position: " << "x = " << moon.pos.x << " y = " << moon.pos.y << std::endl;
 
         EndDrawing();
     }
